@@ -1,2 +1,3 @@
-# DistGER
+# Setup
 # Partitioning
+# Graphembedding
