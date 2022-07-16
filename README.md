@@ -1,4 +1,4 @@
 # Setup
-# experiment
+# Environment
 # Partitioning
 # Graphembedding
