@@ -22,7 +22,7 @@ cmake ..
 make
 ```
 
-Then the compiled executable files are installed at the "bin" directory:
+Then the compiled application executable files are installed at the "bin" directory:
 
 ```
 ls ./bin
