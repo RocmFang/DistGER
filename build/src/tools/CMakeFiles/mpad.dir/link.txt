@@ -1,1 +1,0 @@
-/usr/bin/c++   -fopenmp -g -std=c++0x -O3 -D USE_MKL -O3 -DNDEBUG -Wl,-rpath -Wl,/usr/local/lib -Wl,--enable-new-dtags  CMakeFiles/mpad.dir/mpad.cpp.o  -o ../../bin/mpad -Wl,-rpath,/usr/local/lib /usr/local/lib/libmpicxx.so /usr/local/lib/libmpi.so 

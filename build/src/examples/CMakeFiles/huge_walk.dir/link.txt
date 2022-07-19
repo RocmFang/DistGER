@@ -1,1 +1,0 @@
-/usr/bin/c++   -fopenmp -g -std=c++0x -O3 -D USE_MKL -O3 -march=native -O3 -DNDEBUG -Wl,-rpath -Wl,/usr/local/lib -Wl,--enable-new-dtags  CMakeFiles/huge_walk.dir/huge_walk.cpp.o  -o ../../bin/huge_walk -Wl,-rpath,/usr/local/lib /usr/local/lib/libmpicxx.so /usr/local/lib/libmpi.so -lmkl_intel_ilp64 -lmkl_intel_thread -lmkl_core -liomp5 -lpthread -lm -ldl 
