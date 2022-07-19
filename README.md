@@ -3,8 +3,8 @@
 # Environment
 - Ubuntu 16.04
 - inux kernel 4.15.0
-- MPICH 3.4
-- MKL 2022.0.2
+- [MPICH 3.4](https://www.mpich.org/)
+- [MKL 2022.0.2](https://software.intel.com/en-us/mkl)
 
 # Dataset
 The evaliated dataset Youtube and LiveJournal are prepraed in the "dataset" directory.
