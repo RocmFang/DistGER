@@ -1,6 +1,11 @@
 <meta name="robots" content="noindex">
 
-# Setup
 # Environment
+-Ubuntu 16.04
+-Linux kernel 4.15.0
+-MPICH 3.4
+-MKL 2022.0.2
+# Setup
+
 # Partitioning
 # Graphembedding
