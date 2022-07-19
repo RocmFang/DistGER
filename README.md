@@ -7,7 +7,7 @@
 - MKL 2022.0.2
 
 # Setup
-Compile DistGER with CMake:
+First Compile DistGER with CMake:
 
 ```
 mkdir build && cd build
@@ -16,5 +16,12 @@ cmake ..
 
 make
 ```
+
+Then the compiled executable files will be installed at the "bin" directory:
+
+```
+ls ./bin
+```
+
 # Partitioning
 # Graphembedding
