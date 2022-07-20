@@ -1,6 +1,7 @@
 <meta name="robots" content="noindex">
 
 # Prerequisites
+
 - Ubuntu 16.04
 - Linux kernel 4.15.0
 - g++ 9.4.0
@@ -12,8 +13,8 @@
 The evaluated dataset Youtube and LiveJournal are prepraed in the "dataset" directory.
 Since the the space limited of the repository, the other dataset [Twitter](https://law.di.unimi.it/datasets.php), [Com-Orkut](https://snap.stanford.edu/) and [Flickr](http://datasets.syr.edu/pages/datasets.html) can be found in its open resource.
 
-
 # Setup
+
 First Compile DistGER with CMake:
 
 ```
@@ -31,6 +32,7 @@ ls ./bin
 ```
 
 # Partitioning
+
 If we need to run the train data for the downstream tasks, such as Link prediction, we also should to relable the test data.
 
 ```
@@ -45,7 +47,7 @@ cd build
 
 The partitioned dataset will be saved in the input dataset directory. 
 
-# Graph embedding
+# Graph Embedding
 
 To start the embedding, we fist need to cover the train graph to binary format
 
@@ -59,9 +61,9 @@ Then create the "out" directory to save the walks file or embedding file
 mkdir out
 ```
 
-### Run in single-machine Environment
+### Run in Single-machine Environment
 ```
-mpiexec -n 8 ./bin/huge_walk -g ../dataset/LJ-8.data-r -p ../dataset/LJ-8.part -v 2238731 -w 2238731 --min_L 20 --min_R 5 --make-undirected -o ./out/walks.txt -eoutput ./out/LJ-r_emb.txt -size 128 -iter 1 -threads 72 -window 10 -negative 5  -batch-size 21 -min-count 0 -sample 1e-3 -alpha 0.01 -debug 
+mpiexec -n 8 ./bin/huge_walk -g ../dataset/LJ-8.data-r -p ../dataset/LJ-8.part -v 2238731 -w 2238731 --make-undirected -o ./out/walks.txt -eoutput ./out/LJ-r_emb.txt -size 128 -iter 1 -threads 72 -window 10 -negative 5  -batch-size 21 -min-count 0 -sample 1e-3 -alpha 0.01 -debug 
 ```
 
 ### Run in Distributed Environment
