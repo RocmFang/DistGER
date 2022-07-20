@@ -34,7 +34,7 @@ ls ./bin
 If we need to run the train data for the downstream tasks, such as Link prediction, we also should to relable the test data.
 
 ```
-./bin/mpgp train_data  test_data vertex_num partition_num
+./bin/mpgp [train_data]  [test_data]  [vertex_num]  [partition_num]
 ```
 
 ```
