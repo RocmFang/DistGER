@@ -31,6 +31,12 @@ ls ./bin
 ```
 
 # Partitioning
+If we need to run the train data for the downstream tasks, such as Link prediction, we also should to relable the test data.
 
+```
+cd build
+
+./bin/mpgp ../dataset/LiveJournal.train  ../dataset/LiveJournal.test 2238731 8
+```
 
 # Graph embedding
