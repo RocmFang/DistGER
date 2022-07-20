@@ -10,8 +10,10 @@
 - [MKL 2022.0.2](https://software.intel.com/en-us/mkl)
 
 # Datasets
+
 The evaluated dataset Youtube and LiveJournal are prepraed in the "dataset" directory.
-Since the the space limited of the repository, the other dataset [Twitter](https://law.di.unimi.it/datasets.php), [Com-Orkut](https://snap.stanford.edu/) and [Flickr](http://datasets.syr.edu/pages/datasets.html) can be found in its open resource.
+
+Since the the space limited of the repository, the other dataset [Twitter](https://law.di.unimi.it/datasets.php), [Com-Orkut](https://snap.stanford.edu/) and [Flickr](http://datasets.syr.edu/pages/datasets.html) can be found in their open resource.
 
 # Setup
 
