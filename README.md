@@ -65,9 +65,9 @@ mpiexec -n 8 ./bin/huge_walk -g ../dataset/LJ-8.data-r -p ../dataset/LJ-8.part -
 ```
 
 ## Run in Distributed Environment
--Copy the train dataset to the same path of each machine, or simply place it to a shared file system, such as NFS
--Touch a host file to write each machine's IP address
--Run the application with MPI 
+- Copy the train dataset to the same path of each machine, or simply place it to a shared file system, such as NFS
+- Touch a host file to write each machine's IP address
+- Run the application with MPI 
 
 ```
 mpiexec -hostfile ./hosts -n 8 ./bin/huge_walk -g ../dataset/LJ-8.data-r -p ../dataset/LJ-8.part -v 2238731 -w 2238731 --min_L 20 --min_R 5 --make-undirected -o ./out/walks.txt -eoutput ./out/LJ-r_emb.txt -size 128 -iter 1 -threads 72 -window 10 -negative 5  -batch-size 21 -min-count 0 -sample 1e-3 -alpha 0.01 -debug 
