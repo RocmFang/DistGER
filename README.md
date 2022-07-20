@@ -34,9 +34,31 @@ ls ./bin
 If we need to run the train data for the downstream tasks, such as Link prediction, we also should to relable the test data.
 
 ```
+./bin/mpgp train_data  test_data vertex_num partition_num
+```
+
+```
 cd build
 
 ./bin/mpgp ../dataset/LiveJournal.train  ../dataset/LiveJournal.test 2238731 8
 ```
 
+The partitioned dataset will be saved in the input dataset directory. 
+
 # Graph embedding
+
+To start the embedding, we fist need to cover the train graph to binary format
+
+```
+./bin/gconverter -i ../dataset/LJ.train-8-r -o ./LJ-8.data-r -s weighted
+```
+
+Then create the "out" directory to save the walks file or embedding file
+
+```
+mkdir out
+```
+
+For 
+mpiexec -hostfile ./hosts -n 8 ./bin/huge_walk -g ../dataset/LJ-8.data-r -p ../dataset/LJ-8.part -v 2238731 -w 2238731 --min_L 20 --min_R 5 --make-undirected -o ./out/walks.txt -eoutput ./out/LJ-r_emb.txt -size 128 -iter 1 -threads 72 -window 10 -negative 5  -batch-size 21 -min-count 0 -sample 1e-3 -alpha 0.01 -debug 
+```
