@@ -3,6 +3,7 @@
 # Prerequisites
 - Ubuntu 16.04
 - Linux kernel 4.15.0
+- g++ 9.4.0
 - cmake 3.10.2
 - [MPICH 3.4.2](https://www.mpich.org/)
 - [MKL 2022.0.2](https://software.intel.com/en-us/mkl)
