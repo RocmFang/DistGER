@@ -41,16 +41,19 @@ private:
     args::ValueFlag<std::string> test_edges_flag;
     args::ValueFlag<int> v_num_flag;
     args::ValueFlag<int> p_num_flag;
+    args::ValueFlag<int> type_flag;
 public:
     std::string train_graph;
     std::string test_edges;
     int v_num;
     int p_num;
+    int type;
     MpadOptionHelper() :
         train_graph_flag(parser, "train", "train graph path", {'i'}),
         test_edges_flag(parser, "test", "test edges path", {'e'}),
         v_num_flag(parser, "vertex", "graph vertex number", {'v'}),
-        p_num_flag(parser, "partition", "partition number", {'p'})
+        p_num_flag(parser, "partition", "partition number", {'p'}),
+        type_flag(parser, "type", "weight data type: [0 -> float | 1 -> integer],", {'t'})
     {
     }
 
@@ -69,6 +72,9 @@ public:
 
         assert(p_num_flag);
         p_num = args::get(p_num_flag);
+
+        assert(type_flag);
+        type = args::get(type_flag);
     }
 };
 
@@ -779,11 +785,12 @@ int main(int argc, char* argv[])
     fprintf(flog,"graph path: %s\nv num: %u\n",opt.train_graph.c_str(),v_num);
     printf("graph path: %s\nv num: %u\n",opt.train_graph.c_str(),v_num);
 
-    printf("[Notice]: data type of cn is integer!\n");
+    // printf("[Notice]: data type of cn is integer!\n");
     // look out the type of cn
-    partition_relabel<uint32_t>(opt.train_graph.c_str(),opt.test_edges.c_str(), v_num,partition_num);
-
-    // partition_relabel<float>(opt.train_graph.c_str(),opt.test_edges.c_str(), v_num,partition_num);
+    if(opt.type == 1)
+        partition_relabel<uint32_t>(opt.train_graph.c_str(),opt.test_edges.c_str(), v_num,partition_num);
+    else
+        partition_relabel<float>(opt.train_graph.c_str(),opt.test_edges.c_str(), v_num,partition_num);
 
     fprintf(flog,"[timer:runtime] %lf s(%lf h)\n",timer.duration(),timer.duration()/60.0/24.0);
     printf("[timer:runtime] %lf s(%lf h)\n",timer.duration(),timer.duration()/60.0/24.0);
