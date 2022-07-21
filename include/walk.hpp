@@ -398,7 +398,7 @@ public:
     vector<int>local_corpus;
     vector<vertex_id_t> new_sort; 
     vertex_id_t minLength = 20;
-    vertex_id_t init_round = 1;
+    vertex_id_t init_round = 5;
     
     void get_new_sort()
     {
@@ -480,12 +480,13 @@ public:
         randgen = new StdRandNumGenerator[worker_num_param];
     }
 
-    void set_init_round(vertex_id_t round){
-        this->init_round = round;
+    void set_init_round(vertex_id_t init_round){
+        if(init_round!=0)
+            this->init_round = init_round;
     }
 
-    void set_minLength(vertex_id_t min_Length){
-        if(min_Length!=0)
+    void set_minLength(vertex_id_t minLength){
+        if(minLength!=0)
             this->minLength = minLength;
     }
     StdRandNumGenerator* get_thread_local_rand_gen()
