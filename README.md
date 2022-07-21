@@ -50,6 +50,7 @@ The partitioned dataset will be saved in the input dataset directory.
 To start the embedding, we fist need to cover the train graph to binary format
 
 ```
+cd build
 ./bin/gconverter -i ../dataset/LJ.train-8-r -o ./LJ-8.data-r -s weighted
 ```
 
