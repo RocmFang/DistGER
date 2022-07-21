@@ -38,13 +38,9 @@ ls ./bin
 If we need to run the train data for the downstream tasks, such as Link prediction, we also should to relable the test data.
 
 ```
-./bin/mpgp [train_data]  [test_data]  [vertex_num]  [partition_num]
-```
-
-```
 cd build
 
-./bin/mpgp ../dataset/LiveJournal.train  ../dataset/LiveJournal.test 2238731 8
+./bin/mpgp [train_data]  [test_data]  [vertex_num]  [partition_num]
 ```
 
 The partitioned dataset will be saved in the input dataset directory. 
