@@ -35,7 +35,7 @@ ls ./bin
 
 # Partitioning
 
-If we need to run the train data for the downstream tasks, such as Link prediction, the test data also should be relabled.
+If we need to run the train data for the downstream tasks, such as Link prediction, the test data also should be processed.
 
 ```
 cd build
