@@ -1,7 +1,7 @@
 <meta name="robots" content="noindex">
 
 ### The longer response for DistGER
-
+<p align=''>
 # Review 1
 ### O1. Related work not adequately represented and compared to. The paper presents itself as a scalable approach for obtaining graph embeddings, but it neither discusses nor compares to appropriate alternatives. One example is Gosh [A], which reports faster runtimes and better AUCROC scores on less hardware, but is not mentioned in the paper. Other scalable approaches are cited but not compared to, e.g., VERSE [51]. Ideas such as reusing negative samples or communicating "hot" items differently are reminiscent of multi-technique parameter servers such as NuPS [B]. There is also a Huge+ paper [C], which hasn't been discussed or cited.
  
@@ -66,7 +66,7 @@ a.   Thanks for your suggestion. We will add some examples in the new version as
 W4. Figures 8-10: Some fonts are too small, which makes the legends illegible.
  a. Thanks for your suggestion. We will modify the figure in the new version.
 
-
+</p>
 
 
 ### This codebase is for the paper: Distributed Graph Embedding with Information-Oriented Random Walks
