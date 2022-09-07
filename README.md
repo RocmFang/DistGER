@@ -69,7 +69,8 @@
 
 
 
-### This codebase is for the paper: Distributed Graph Embedding with Information-Oriented Random Walks
+***
+## This codebase is for the paper: Distributed Graph Embedding with Information-Oriented Random Walks
 
 # Prerequisites
 
