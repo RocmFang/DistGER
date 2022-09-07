@@ -63,7 +63,7 @@ Hua et al., Quasi-Streaming Graph Partitioning: A Game Theoretical Approach, IEE
 - <p align="justify"> In revision, we also plan to evaluate on a billion-node graph to further exhibit the scalability of our scheme.</p>
 #### <p align="justify"> W3. Abstract: "The increasing availability of billion-edge graphs...". Some examples would strengthen the problem statement and motivation.</p>
 - <p align="justify">   Thanks for your suggestion. We will add some examples in the new version as follows. The link prediction task on Twitter with over one billion edges and the product recommendation for the user-product network of Alibaba  which has more than two billion items.</p>
-#### <p align="justify"> W4. <p align="justify"> Figures 8-10: Some fonts are too small, which makes the legends illegible.</p>
+#### <p align="justify"> W4. Figures 8-10: Some fonts are too small, which makes the legends illegible.</p>
 - <p align="justify"> Thanks for your suggestion. We will modify the figure in the new version.</p>
 
 
