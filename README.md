@@ -1,8 +1,8 @@
 <meta name="robots" content="noindex">
 
-### The longer response for DistGER
+# The longer response for DistGER
 
-# Review 1
+## Review 1
 #### <p align="justify">  O1. Related work not adequately represented and compared to. The paper presents itself as a scalable approach for obtaining graph embeddings, but it neither discusses nor compares to appropriate alternatives. One example is Gosh [A], which reports faster runtimes and better AUCROC scores on less hardware, but is not mentioned in the paper. Other scalable approaches are cited but not compared to, e.g., VERSE [51]. Ideas such as reusing negative samples or communicating "hot" items differently are reminiscent of multi-technique parameter servers such as NuPS [B]. There is also a Huge+ paper [C], which hasn't been discussed or cited.</p>
  
 #### Thanks for your suggestions. We will supplement the discussion of related approaches and compare them as detailed below in the revision.
@@ -32,11 +32,11 @@
 - <p align="justify">The partition only runs once and the partition results can be reused for many embedding systems (and even for other graph analytic workloads, such as personalized PageRank). Moreover, to generate the better quality of embeddings, the models usually need to be tuned multiple times, thus the gains of partition amortize its overhead. Finally, the random walk efficiency can benefit from the partition scheme as shown in Sec. 6.5, our solution can deliver an average efficiency gain of 39.3%.
 - <p align="justify"> Our proposed partition scheme is more efficient than other methods including the METIS [28], LDG [47] and FENNEL [52], it is on average 12.89× faster than competitors (Table 4).
  
-Review2
+## Review2
 #### <p align="justify"> O1. As it is not your contribution Algorithm 1 is not required to be present in the paper and can be removed.
 - <p align="justify"> Algorithm 1 shows the walking procedure of node2vec in the walker-centric programming model, thus it serves as a preliminary to demonstrate how HuGE-D works on KnigtKing. If there is a space constraint, we will remove it in the  revision.
 #### <p align="justify"> O2. What is the intuition behind PS1 and PS1. How γ is usually set?
-a. PS1 denotes how many neighbors of an unpartitioned node are in the candidate partition, thus a higher value of PS1 implies that the unpartitioned node should be assigned to the candidate partition. PS2 is defined as the number of common neighbors between the unpartitioned node and the nodes in the candidate partition. Since the number of common neighbors is widely used to measure the similarity of node-pairs during random walk, considering a higher value of PS2 is more in line with the characteristics of random walk.
+- <p align="justify"> PS1 denotes how many neighbors of an unpartitioned node are in the candidate partition, thus a higher value of PS1 implies that the unpartitioned node should be assigned to the candidate partition. PS2 is defined as the number of common neighbors between the unpartitioned node and the nodes in the candidate partition. Since the number of common neighbors is widely used to measure the similarity of node-pairs during random walk, considering a higher value of PS2 is more in line with the characteristics of random walk. </p>
 - <p align="justify"> 𝛾 is a slack parameter that allows deviation from the exact load balancing. Although setting a strict 𝛾 will ensure the load-balancing, it may hamper the partition quality, resulting in lower utilization of the local partition. On the other hand, setting a larger 𝛾 will relax the load-balancing constraint, and would create skewed partitioning. Thus, there is a trade-off between the partition quality and load-balancing. In our case, we experimentally analyze those trade-offs and we set 𝛾 =2 since this provides a sweet point among those trade-offs. If given a chance, we shall add experimental results to show how different 𝛾 affects the quality (efficiency of sampling) and load balancing.
 #### <p align="justify"> O3. One more line is required to explain the main idea behind the Galloping algorithm for the paper to be self-complete.
 - <p align="justify"> We will add a brief explanation of the main idea for the Galloping algorithm in the revision.
