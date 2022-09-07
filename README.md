@@ -1,6 +1,6 @@
 <meta name="robots" content="noindex">
 
-# <p align="center"> Longer Feedback for the reviews of DistGER paper <\p>
+# <p align="center"> Longer Feedback for the reviews of DistGER paper </p>
 ## We thank all reviewers for their constructive and insightful comments.
 
 ## Review 1
