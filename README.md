@@ -33,7 +33,7 @@
 - <p align="justify"> Our proposed partition scheme is more efficient than other methods including the METIS [28], LDG [47] and FENNEL [52], it is on average 12.89× faster than competitors (Table 4).</p>
 
 #### <p align="justify"> 12. Availability: The code appears reasonable, but some things (e.g., partitioning) are not yet documented. </p>
-- <p align="justify"> The partition code is located in src/tools/ and named as mpgp.cpp, please check. </p>
+- <p align="justify"> The partition code is located in src/tools and named as mpgp.cpp, please check. </p>
 
  
 ## Review2
