@@ -39,7 +39,7 @@
 - <p align="justify"> The partition code is located in src/tools, named as mpgp.cpp. We shall improve documentation. </p>
 
  
-## Review2
+## Review 2
 #### <p align="justify"> O1. As it is not your contribution Algorithm 1 is not required to be present in the paper and can be removed.</p>
 - <p align="justify">Algorithm 1 shows the walking procedure of node2vec in the walker-centric programming model, thus it serves as a preliminary to demonstrate how HuGE-D works on KnigtKing. If there is a space constraint, we will remove it in the revision.</p>
  
@@ -68,7 +68,7 @@
 
 
  
-## Review3
+## Review 3
 #### <p align="justify"> W1. Almost the whole Introduction section is discussing related work. Almost no discussion of higher-level specific problem statements (i.e. why billion-node graphs are important) and motivation behind the solution (i.e. why the current solution is so important in context of a real-world problem, where a billion-node graph is a solution). I understand "As a preview, comparing with KnightKing, Pytorch-BigGraph, and DistDGL, our DistGER achieves 19.3×, 16.9×, and 118.9× faster embedding on average, and easily scales to billion-edge graphs", but it is still unclear why it is a "hair on fire" problem that the current solutions are slower and not good enough.</p>
  
 - <p align="justify">  Our paper states the billion-edge graph (as done by all other related work) instead of the billion-node graph. We also plan to add experimental results on a billion-node graph (see reply to W2).</p>
