@@ -15,5 +15,3 @@ function(add_tool_exec EXEC_NAME)
     add_executable(${EXEC_NAME} ${EXEC_NAME}.cpp)
     target_link_libraries(${EXEC_NAME} PUBLIC ${MPI_LIBRARIES})
 endfunction(add_tool_exec)
-
-
