@@ -1,5 +1,5 @@
 
-## This codebase gives the reference implementation of [DistGER](https://www.vldb.org/pvldb/vol16/p1643-fang.pdf) as described in the paper
+## This codebase gives the reference implementation of [DistGER](https://www.vldb.org/pvldb/vol16/p1643-fang.pdf) as described in the paper:
 Distributed Graph Embedding with Information-Oriented Random Walks. <br>
 Peng Fang, Arijit Khan, Siqiang Luo, Fang Wang, Dan Feng, Zhenli Li, Wei Yin and Yuchao Cao <br>
 Published to [49th International Conference on Very Large Data Bases (VLDB 2023)](https://vldb.org/2023/) <br>
