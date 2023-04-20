@@ -86,18 +86,11 @@ mpiexec -hostfile ./hosts -n 8 ./bin/huge_walk -g ../dataset/LJ-8.data-r -p ../d
 
 ## Citing
 If you find *DistGER* useful for your research, please consider citing the following paper:
-
-
-	@inproceedings{HuGE-ICDE2021,
-	author = {Peng Fang, Fang Wang, Zhan Shi, Hong Jiang, Dan Feng, and Lei Yang},
-	 title = {HuGE: An Entropy-driven Approach to Efficient and Scalable Graph Embeddings},
-	 booktitle = {Proceedings of the 37th IEEE International Conference on Data Engineering, {ICDE 2021}},
-	 year = {2021}
-	}
-
+```
 @article{fang2023distributed,
   title={Distributed Graph Embedding with Information-Oriented Random Walks},
   author={Fang, Peng and Khan, Arijit and Luo, Siqiang and Wang, Fang and Feng, Dan and Li, Zhenli and Yin, Wei and Cao, Yuchao},
   journal={arXiv preprint arXiv:2303.15702},
   year={2023}
 }
+```
