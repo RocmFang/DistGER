@@ -84,7 +84,7 @@ mpiexec -hostfile ./hosts -n 8 ./bin/huge_walk -g ../dataset/LJ-8.data-r -p ../d
 ### Check the output files in "out" directory
 
 
-## Citing
+# Citing
 If you find *DistGER* useful for your research, please consider citing the following paper:
 ```
 @article{fang2023distributed,
