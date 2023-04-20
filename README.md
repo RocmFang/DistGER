@@ -1,7 +1,10 @@
-<meta name="robots" content="noindex">
+
+## This codebase gives the reference implementation of DistGER 
+Distributed Graph Embedding with Information-Oriented Random Walks. <br>
+Peng Fang, Arijit Khan, Siqiang Luo, Fang Wang, Dan Feng, Zhenli Li, Wei Yin and Yuchao Cao <br>
+Published to [49th International Conference on Very Large Data Bases (VLDB 2023)](https://www.vldb.org/pvldb/vol16/p1643-fang.pdf)  <br>
 
 
-## This codebase is for the paper: Distributed Graph Embedding with Information-Oriented Random Walks
 
 # Prerequisites
 
@@ -79,3 +82,14 @@ mpiexec -hostfile ./hosts -n 8 ./bin/huge_walk -g ../dataset/LJ-8.data-r -p ../d
 ```
 
 ### Check the output files in "out" directory
+
+
+## Citing
+If you find *DistGER* useful for your research, please consider citing the following paper:
+
+@article{fang2023distributed,
+  title={Distributed Graph Embedding with Information-Oriented Random Walks},
+  author={Fang, Peng and Khan, Arijit and Luo, Siqiang and Wang, Fang and Feng, Dan and Li, Zhenli and Yin, Wei and Cao, Yuchao},
+  journal={arXiv preprint arXiv:2303.15702},
+  year={2023}
+}
