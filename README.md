@@ -90,7 +90,10 @@ If you find *DistGER* useful for your research, please consider citing the follo
 @article{fang2023distributed,
   title={Distributed Graph Embedding with Information-Oriented Random Walks},
   author={Fang, Peng and Khan, Arijit and Luo, Siqiang and Wang, Fang and Feng, Dan and Li, Zhenli and Yin, Wei and Cao, Yuchao},
-  journal={arXiv preprint arXiv:2303.15702},
-  year={2023}
+  journal = {Proc. VLDB Endow.},
+  year = {2023},
+  volume = {16},
+  number = {7},
+  pages = {1643–1656}
 }
 ```
