@@ -904,7 +904,7 @@ public:
                                 // }
                                 
                                 // int common_neighbors = this->commonNeighbors[src_dst_com_nei];
-                                double p = static_cast<double>(rand()) / static_cast<double>(RAND_MAX);
+                                double p = this->get_thread_local_rand_gen()->gen_float(1.0);
 
                                 int src_degree = this->vertex_out_degree[current_v];
                                 int dst_degree = this->vertex_out_degree[candidate->neighbour];

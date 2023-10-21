@@ -30,7 +30,8 @@ public:
     bool make_undirected;
     vertex_id_t v_num;
     int t_num;
-    GcnOptionHelper() :
+    GcnOptionHelper(string head,string tail) :
+        OptionHelper(head,tail),
         v_num_flag(parser, "vertex", "vertex number", {'v'}),
         t_num_flag(parser, "thread", "thread number", {'t'}),
         input_path_flag(parser, "input", "input graph path", {'i'}),
@@ -376,7 +377,8 @@ int main(int argc, char** argv)
 {
     Timer timer;
     srand(time(NULL));
-    GcnOptionHelper opt;
+    GcnOptionHelper opt("Count the common neighbors of source vertex and destination vertex for each edge. \
+    The result is appended each edge.","");
     opt.parse(argc, argv);
     thread_num = opt.t_num;
     if(thread_num==0)thread_num=1;

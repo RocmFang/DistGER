@@ -16,6 +16,7 @@
 #include<unistd.h>
 #include <unordered_map>
 #include <mutex>
+#include <fstream>
 
 #include "type.hpp"
 #include "option_helper.hpp"
@@ -48,12 +49,13 @@ public:
     int v_num;
     int p_num;
     int type;
-    MpadOptionHelper() :
+    MpadOptionHelper(string head,string tail) : 
+        OptionHelper(head,tail),
         train_graph_flag(parser, "train", "train graph path", {'i'}),
-        test_edges_flag(parser, "test", "test edges path", {'e'}),
-        v_num_flag(parser, "vertex", "graph vertex number", {'v'}),
+        test_edges_flag(parser, "test", "[optional] test edges path ", {'e'}),
+        v_num_flag(parser, "vertex", "the actual number of different vertices in the graph", {'v'}),
         p_num_flag(parser, "partition", "partition number", {'p'}),
-        type_flag(parser, "type", "weight data type: [0 -> float | 1 -> integer],", {'t'})
+        type_flag(parser, "type", "[optional] weight data type: [0 -> float | 1 -> integer],", {'t'})
     {
     }
 
@@ -64,7 +66,6 @@ public:
         assert(train_graph_flag);
         train_graph = args::get(train_graph_flag);
 
-        assert(test_edges_flag);
         test_edges = args::get(test_edges_flag);
 
         assert(v_num_flag);
@@ -619,11 +620,18 @@ void partition_relabel(const char* graph_path,const char* test_edges_path, verte
     Timer timer;
     Edge<T>* graph_edges;
     size_t graph_e_num;
+    bool hasTestEdges = false;
+    if(test_edges_path[0] != '\0') 
+        hasTestEdges = true;
+
     read_edge_by_txt(graph_path, graph_edges, graph_e_num);
 
     Edge<EmptyData>* test_edges;
     size_t test_e_num;
-    read_edge_by_txt(test_edges_path, test_edges, test_e_num);
+    if(hasTestEdges)
+    {
+        read_edge_by_txt(test_edges_path, test_edges, test_e_num);
+    }
     // printf("[test_e_num]%lu\n",test_e_num);
     fprintf(flog,"[read edge time]%lf s\n",timer.duration());
     timer.restart();
@@ -699,10 +707,13 @@ void partition_relabel(const char* graph_path,const char* test_edges_path, verte
         graph_edges[e_i].dst = vertex_map[graph_edges[e_i].dst];
     }
 
-    for (edge_id_t e_i=0; e_i < test_e_num; e_i++)
+    if(hasTestEdges)
     {
-        test_edges[e_i].src = vertex_map[test_edges[e_i].src];
-        test_edges[e_i].dst = vertex_map[test_edges[e_i].dst];
+        for (edge_id_t e_i = 0; e_i < test_e_num; e_i++)
+        {
+            test_edges[e_i].src = vertex_map[test_edges[e_i].src];
+            test_edges[e_i].dst = vertex_map[test_edges[e_i].dst];
+        }
     }
 
     cout << "relabel finished\n";
@@ -714,29 +725,32 @@ void partition_relabel(const char* graph_path,const char* test_edges_path, verte
     pn_suffix = "-" + pn_suffix;
 
     string graph_path_r = str_cb(graph_path, pn_suffix.c_str());
-    graph_path_r += stream_mod;
+    // graph_path_r += stream_mod;
     graph_path_r = str_cb(graph_path_r.c_str(), "-r");
 
-    FILE* f_graph_path_r = fopen(graph_path_r.c_str(), "w");
+    ofstream fstr_graph_path_r(graph_path_r);
     for (edge_id_t e_i = 0; e_i < graph_e_num; e_i++)
     {
         if(e_i%2==0)
-        fprintf(f_graph_path_r,"%u %u %u\n", graph_edges[e_i].src, graph_edges[e_i].dst, graph_edges[e_i].data);
+            fstr_graph_path_r << graph_edges[e_i].src << graph_edges[e_i].dst << graph_edges[e_i].data << endl;
     }
-    fclose(f_graph_path_r);
+    fstr_graph_path_r.close();
 
-    string test_path_r = str_cb(test_edges_path,pn_suffix.c_str() );
-    test_path_r += stream_mod;
-    test_path_r = str_cb(test_path_r.c_str(), "-r");
-    FILE* f_test_path_r = fopen(test_path_r.c_str(), "w");
-    for (edge_id_t e_i = 0; e_i < test_e_num; e_i++)
+    if(hasTestEdges)
     {
-        fprintf(f_test_path_r,"%u %u\n", test_edges[e_i].src, test_edges[e_i].dst);
+        string test_path_r = str_cb(test_edges_path,pn_suffix.c_str() );
+        // test_path_r += stream_mod;
+        test_path_r = str_cb(test_path_r.c_str(), "-r");
+        FILE* f_test_path_r = fopen(test_path_r.c_str(), "w");
+        for (edge_id_t e_i = 0; e_i < test_e_num; e_i++)
+        {
+            fprintf(f_test_path_r,"%u %u\n", test_edges[e_i].src, test_edges[e_i].dst);
+        }
+        fclose(f_test_path_r);
     }
-    fclose(f_test_path_r);
 
     string partition_ = str_cb(graph_path, pn_suffix.c_str());
-    partition_ += stream_mod;
+    // partition_ += stream_mod;
     partition_ = str_cb(partition_.c_str(), "-p");
     FILE* f_partition_r = fopen(partition_.c_str(), "w");
     for (int p_i = 0; p_i < partition_num; p_i++)
@@ -763,7 +777,7 @@ int main(int argc, char* argv[])
 {
   
     Timer timer;
-    MpadOptionHelper opt;
+    MpadOptionHelper opt("Partition the graph in mpgp","[TIPS] If crashed, you could try \"./bin/relabel\" to preprocess the raw graph data.");
     opt.parse(argc, argv);
     // char* graph_path = opt.train_graph.c_str();
     // char* test_edges_path = opt.test_edges.c_str();

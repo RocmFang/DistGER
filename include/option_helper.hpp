@@ -11,6 +11,8 @@
 
 #include "type.hpp"
 
+#include <string>
+
 class OptionHelper
 {
 protected:
@@ -24,7 +26,11 @@ public:
     OptionHelper() :
         parser("", ""),
         help(parser, "help", "Display this help menu", {'h', "help"})
-    {}
+    {};
+    OptionHelper(std::string prog_des,std::string tail) :
+        parser(prog_des,tail),
+        help(parser, "help", "Display this help menu", {'h', "help"})
+    { };
 
     virtual void parse(int argc, char **argv)
     {

@@ -21,7 +21,8 @@ private:
 public:
     std::string input_path;
     std::string output_path;
-    RelabelOptionHelper() :
+    RelabelOptionHelper(string head,string tail) :
+        OptionHelper(head,tail),
         input_path_flag(parser, "input", "input graph path", {'i'}),
         output_path_flag(parser, "output", "output graph path", {'o'})
     {
@@ -158,7 +159,8 @@ void grelabel(const char* input_path, const char* output_path)
 int main(int argc, char** argv)
 {
     Timer timer;
-    RelabelOptionHelper opt;
+    RelabelOptionHelper opt("Preprocess the raw graph data.\n\
+Relabel the vertax id to continuous natural number, and count the number of vertices","");
     opt.parse(argc, argv);
 
     grelabel<vertex_id_t>(opt.input_path.c_str(), opt.output_path.c_str());

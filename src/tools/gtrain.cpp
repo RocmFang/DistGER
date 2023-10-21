@@ -33,7 +33,8 @@ public:
     float sample;
     vertex_id_t v_num;
     int thread;
-    GtrainOptionHelper() :
+    GtrainOptionHelper(string head,string tail) :
+        OptionHelper(head,tail),
         input_flag(parser, "input", "input graph path", {'i'}),
         lpfile_flag(parser, "lpfile", "train graph file path", {'o'}),
         test_edges_flag(parser, "test_edges", "test edegs path", {'e'}),
@@ -389,7 +390,7 @@ int main(int argc, char** argv)
 {
     Timer timer;
     srand(time(NULL));
-    GtrainOptionHelper opt;
+    GtrainOptionHelper opt("Divide the edges to test set and training set.","");
     opt.parse(argc, argv);
     thread_num = opt.thread;
     if(thread_num==0)thread_num=1;
