@@ -55,7 +55,7 @@ public:
         test_edges_flag(parser, "test", "[optional] test edges path ", {'e'}),
         v_num_flag(parser, "vertex", "the actual number of different vertices in the graph", {'v'}),
         p_num_flag(parser, "partition", "partition number", {'p'}),
-        type_flag(parser, "type", "[optional] weight data type: [0 -> float | 1 -> integer],", {'t'})
+        type_flag(parser, "type", "[optional] weight data type: [0 -> int | 1 -> float],", {'t'})
     {
     }
 
@@ -732,7 +732,7 @@ void partition_relabel(const char* graph_path,const char* test_edges_path, verte
     for (edge_id_t e_i = 0; e_i < graph_e_num; e_i++)
     {
         if(e_i%2==0)
-            fstr_graph_path_r << graph_edges[e_i].src << graph_edges[e_i].dst << graph_edges[e_i].data << endl;
+            fstr_graph_path_r << graph_edges[e_i].src<<" "<< graph_edges[e_i].dst<< " " << graph_edges[e_i].data << endl;
     }
     fstr_graph_path_r.close();
 
@@ -801,7 +801,7 @@ int main(int argc, char* argv[])
 
     // printf("[Notice]: data type of cn is integer!\n");
     // look out the type of cn
-    if(opt.type == 1)
+    if(opt.type == 0)
         partition_relabel<uint32_t>(opt.train_graph.c_str(),opt.test_edges.c_str(), v_num,partition_num);
     else
         partition_relabel<float>(opt.train_graph.c_str(),opt.test_edges.c_str(), v_num,partition_num);

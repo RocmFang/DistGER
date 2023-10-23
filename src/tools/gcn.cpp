@@ -19,25 +19,19 @@ class GcnOptionHelper : public OptionHelper
 private:
     args::ValueFlag<std::string> input_path_flag;
     args::ValueFlag<std::string> output_path_flag;
-    args::ValueFlag<std::string> static_comp_flag;
     args::ValueFlag<vertex_id_t> v_num_flag;
     args::ValueFlag<int> t_num_flag;
-    args::Flag make_undirected_flag;
 public:
     std::string input_path;
     std::string output_path;
-    std::string static_comp;
-    bool make_undirected;
     vertex_id_t v_num;
     int t_num;
     GcnOptionHelper(string head,string tail) :
         OptionHelper(head,tail),
         v_num_flag(parser, "vertex", "vertex number", {'v'}),
-        t_num_flag(parser, "thread", "thread number", {'t'}),
+        t_num_flag(parser, "thread", "parallel thread number", {'t'}),
         input_path_flag(parser, "input", "input graph path", {'i'}),
-        output_path_flag(parser, "output", "output graph path", {'o'}),
-        static_comp_flag(parser, "static", "graph type: [weighted | unweighted]", {'s'}),
-        make_undirected_flag(parser, "make-undirected", "load graph and treat each edge as undirected edge", {"make-undirected"})
+        output_path_flag(parser, "output", "output graph path", {'o'})
     {
     }
 
@@ -57,21 +51,15 @@ public:
         assert(output_path_flag);
         output_path = args::get(output_path_flag);
 
-        assert(static_comp_flag);
-        static_comp = args::get(static_comp_flag);
-        assert(static_comp.compare("weighted") == 0 || static_comp.compare("unweighted") == 0);
-
-        make_undirected = make_undirected_flag;
     }
 };
 
-template<typename edge_data_t, typename ec_data_t>
-void build_edge_container(vertex_id_t v_num,Edge<edge_data_t> *edges, edge_id_t local_edge_num, EdgeContainer<ec_data_t> *ec, vector<vertex_id_t>& vertex_out_degree)
+template<typename edge_data_t >
+void build_edge_container(vertex_id_t v_num,vector<Edge<edge_data_t>>& edges, edge_id_t local_edge_num, EdgeContainer<int> *ec, vector<vertex_id_t>& vertex_out_degree)
 {
 
-    ec->adj_lists = new AdjList<ec_data_t>[v_num];
-
-    ec->adj_units = new AdjUnit<ec_data_t>[local_edge_num];
+    ec->adj_lists = new AdjList<int>[v_num];
+    ec->adj_units = new AdjUnit<int>[local_edge_num];
     edge_id_t chunk_edge_idx = 0;
     for (vertex_id_t v_i = 0; v_i < v_num; v_i++)
     {
@@ -250,43 +238,38 @@ void interset_debug(vertex_id_t src, vertex_id_t dst,EdgeContainer<int>*graph)
 template<typename edge_data_t>
 void gcn(const char* input_path, const char* output_path, bool load_as_undirected ,vertex_id_t v_num)
 {
-    std::vector<Edge<edge_data_t> > edges;
+    std::vector<Edge<edge_data_t>> edges;
     read_txt_edges(input_path, edges);
+    printf("read edge num : %zu\n",edges.size());
 
-    std::vector<Edge<edge_data_t> >* edge_ptr = &edges;
-    std::vector<Edge<edge_data_t>> undirected_edges;
+    std::vector<Edge<edge_data_t>> undirected_edges(edges.size() * 2);
 
-     if (load_as_undirected)
+// #pragma omp parallel for num_threads(thread_num)
+    for (edge_id_t e_i = 0; e_i < edges.size(); e_i++)
     {
-        undirected_edges.resize(edges.size() * 2);
-#pragma omp parallel for num_threads(thread_num)
-        for (edge_id_t e_i = 0; e_i < edges.size(); e_i++)
-        {
-      
-            undirected_edges[e_i * 2] = edges[e_i];
 
-            undirected_edges[e_i * 2 + 1] = edges[e_i];
-            std::swap(undirected_edges[e_i * 2 + 1].src, undirected_edges[e_i * 2 + 1].dst);
-        }
-        edge_ptr = &undirected_edges;
-        printf("read as undirected ok\n");
+        undirected_edges[e_i * 2] = edges[e_i];
+        undirected_edges[e_i * 2 + 1] = edges[e_i];
+        
+        std::swap(undirected_edges[e_i * 2 + 1].src, undirected_edges[e_i * 2 + 1].dst);
     }
-    else
-        printf("read ok\n");
+    printf("read as undirected ok\n");
 
 
     // write_graph(output_path, edges.data(), edges.size());
     std::vector<vertex_id_t>vertex_out_degree(v_num);
     printf("%lu \n",vertex_out_degree.size());
    
-    for (edge_id_t e_i = 0; e_i < edge_ptr->size(); e_i++) 
+    for (edge_id_t e_i = 0; e_i < undirected_edges.size(); e_i++) 
     {
-
-        vertex_out_degree[(*edge_ptr)[e_i].src]++;
+        if(undirected_edges[e_i].src >= v_num || undirected_edges[e_i].src <0) printf("access out of bounds");
+        vertex_out_degree[undirected_edges[e_i].src]++;
     }
     printf("cal degree ok\n");
+
     EdgeContainer<int>*graph = new EdgeContainer<int>();
-    build_edge_container<edge_data_t,int>(v_num,(*edge_ptr).data(), (*edge_ptr).size(), graph, vertex_out_degree);
+    
+    build_edge_container<edge_data_t>(v_num,undirected_edges, undirected_edges.size(), graph, vertex_out_degree);
     printf("build csr ok\n");
     sort_csr(graph,v_num);
 
@@ -378,14 +361,13 @@ int main(int argc, char** argv)
     Timer timer;
     srand(time(NULL));
     GcnOptionHelper opt("Count the common neighbors of source vertex and destination vertex for each edge. \
-    The result is appended each edge.","");
+    The result is appended each edge.","[WARN] Assume the input graph data is undirected and unweighted by default");
     opt.parse(argc, argv);
     thread_num = opt.t_num;
     if(thread_num==0)thread_num=1;
-    printf("thread_num: %d\n",thread_num);
+    printf("parallel thread_num: %d\n",thread_num);
    
-    gcn<EmptyData>(opt.input_path.c_str(), opt.output_path.c_str(),opt.make_undirected,opt.v_num);
-
+    gcn<EmptyData>(opt.input_path.c_str(), opt.output_path.c_str(),true,opt.v_num);
 
     printf("[get cn] time: %f \n",timer.duration());
 	return 0;

@@ -46,7 +46,7 @@ If we need to run the train data for the downstream tasks, such as Link predicti
 ```
 cd build
 
-./bin/mpgp -i [train_data] -e [test_data] -v [vertex_num] -p [partition_num] -t [float:0, integer:1]
+./bin/mpgp -i [train_data] -e [test_data] -v [vertex_num] -p [partition_num] -t [int:0, float:1]
 ```
 
 The partitioned dataset will be saved in the input dataset directory. 

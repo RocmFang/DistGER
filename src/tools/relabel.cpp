@@ -137,7 +137,6 @@ void grelabel(const char* input_path, const char* output_path)
     }
     printf("relabel ok, start writing\n");
  
-
     FILE* output_file = fopen(output_path,"w");
     if(output_file==nullptr){
         printf("open %s fail\n",output_path);
@@ -147,8 +146,8 @@ void grelabel(const char* input_path, const char* output_path)
         vertex_id_t src = edges[e_i].src;
         vertex_id_t dst = edges[e_i].dst;
 
-        fprintf(output_file,"%u %u %u\n",relabel[src],relabel[dst],edges[e_i].data);
-        // fprintf(output_file,"%u\t%u\n",relabel[src],relabel[dst]);
+        // fprintf(output_file,"%u %u %u\n",relabel[src],relabel[dst],edges[e_i].data);
+        fprintf(output_file,"%u %u\n",relabel[src],relabel[dst]);
      }
     
     fclose(output_file);
@@ -160,10 +159,10 @@ int main(int argc, char** argv)
 {
     Timer timer;
     RelabelOptionHelper opt("Preprocess the raw graph data.\n\
-Relabel the vertax id to continuous natural number, and count the number of vertices","");
+Relabel the vertax id to continuous natural number, and count the number of vertices","[WARN] Assume the input graph data is undirected and unweighted by default");
     opt.parse(argc, argv);
 
-    grelabel<vertex_id_t>(opt.input_path.c_str(), opt.output_path.c_str());
+    grelabel<EmptyData>(opt.input_path.c_str(), opt.output_path.c_str());
 
     printf("[relabel] time: %f \n",timer.duration());
 	return 0;
